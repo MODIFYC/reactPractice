@@ -43,19 +43,31 @@ function MinutesTohours() {
     )
 }
 
-// function KmToMiles(){
-//     return(
+function KmToMiles(){
+    return <h3>KM 2 M</h3>
+}
 
-//     )
-// }
+// KmToMiles(): 추가하기
+// App(): select 값에 따라 값이 안바뀜. 처음 값만 나옴..
 
 function App() {
+    const [index, setIndex] = React.useState("xx");
+    const onSelect = (event) =>{
+        setIndex(event.target.value);
+    }
     return (
         <div>
             <h1>Converter</h1>
-            <h1 />
-            <MinutesTohours />
-            {/* <KmToMiles /> */}
+            <select value={index} onChange = {onSelect}>
+                <option values = "xx">Select your units</option>
+                <option values = "0">Minute & hours</option>
+                <option values = "1">Km & Miles</option>
+            </select>
+            <hr />
+            {index === "xx" ? "Please select your untis": null}
+            {index === "0" ? <MinutesTohours /> : null}
+            {index === "1" ? <KmToMiles /> : null}
+            <hr />
         </div>
     )
 }
