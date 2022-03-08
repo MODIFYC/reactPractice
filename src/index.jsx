@@ -18,7 +18,7 @@ function MinutesTohours() {
             <div>
                 <label htmlFor = "minutes">Minutes</label> 
                 <input
-                    value = {inverted ? amount * 60 : amount}
+                    value = {inverted ? amount*60 : amount}
                     id ="minutes"
                     placeholder='Minutes'
                     type="number"
@@ -44,11 +44,45 @@ function MinutesTohours() {
 }
 
 function KmToMiles(){
-    return <h3>KM 2 M</h3>
+    const [amount, setAmount] = React.useState(0);
+    const [inverted, setInverted] = React.useState(0);
+    const onChange = (event) => {
+        setAmount(event.target.value);
+    };
+    const reset = () => setAmount(0);
+    const onInvert = () => {
+        reset();
+        setInverted((current) => !current);
+    };
+    return (
+        <div>
+            <div>
+                <label htmlFor = "miles">Miles</label> 
+                <input
+                    value = {inverted ? amount * 0.621371 : amount}
+                    id ="miles"
+                    placeholder='Miles'
+                    type="number"
+                    onChange={onChange}
+                    disabled={inverted}
+                />
+            </div>
+            <div>
+                <label htmlFor = "km">Km</label> 
+                <input
+                    value = {inverted ? amount : amount * 1.60934}
+                    id ="km"
+                    placeholder='Km'
+                    type="number"
+                    onChange={onChange}
+                    disabled={!inverted}
+                />
+            </div>
+            <button onClick={reset}>Reset</button>
+            <button onClick={onInvert}>{inverted ? "Turn back" : "Inverted"}</button>
+        </div>
+    )
 }
-
-// KmToMiles(): 추가하기
-// App(): select 값에 따라 값이 안바뀜. 처음 값만 나옴..
 
 function App() {
     const [index, setIndex] = React.useState("xx");
@@ -59,9 +93,9 @@ function App() {
         <div>
             <h1>Converter</h1>
             <select value={index} onChange = {onSelect}>
-                <option values = "xx">Select your units</option>
-                <option values = "0">Minute & hours</option>
-                <option values = "1">Km & Miles</option>
+                <option value = "xx">Select your units</option>
+                <option value = "0">Minute & hours</option>
+                <option value = "1">Km & Miles</option>
             </select>
             <hr />
             {index === "xx" ? "Please select your untis": null}
