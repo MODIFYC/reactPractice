@@ -1,29 +1,32 @@
-import { Button } from 'bootstrap';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-function Btn({text, big}){  // == Btn(props)
+function Btn({text, onClick}){  // == Btn(props)
     return (
         <button 
+        onClick={onClick}
         style={{
             backgroundColor: "skyblue",
             color: "white",
             padding: "10px 20px",
             border: 0,
             borderRadius: 10,
-            fontSize: big ? 30 : 15,
         }}>
             {text} {/* == props.text */}
         </button>
     )
 }
 
+const MemorizedBtn= React.memo(Btn)
+
 function App() {
+    const [value, setValue] = React.useState("Save Changes");
+    const changeValue = () => setValue("Revert Changes");
     return (
     <div>
-        <Btn text="Save Changes" big={true} />
-        <Btn text="Continue" big={false} />
+        <MemorizedBtn text={value} onClick={changeValue} />
+        <MemorizedBtn text="Continue" />
     </div>
     )
 }
