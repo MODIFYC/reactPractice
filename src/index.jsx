@@ -1,32 +1,36 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import PropTypes from 'prop-types';
 
-function Btn({text, onClick}){  // == Btn(props)
+function Btn({text, fontSize = 15}){  // == Btn(props)
     return (
         <button 
-        onClick={onClick}
         style={{
             backgroundColor: "skyblue",
             color: "white",
             padding: "10px 20px",
             border: 0,
             borderRadius: 10,
+            fontSize,
         }}>
             {text} {/* == props.text */}
         </button>
     )
 }
 
-const MemorizedBtn= React.memo(Btn)
+// 입력값 정의: propTypes
+//npm install --save prop-types
+Btn.propTypes = {
+    text: PropTypes.string.isRequired,  //isRequired: 필수값
+    fontSize: PropTypes.number,
+}
 
 function App() {
-    const [value, setValue] = React.useState("Save Changes");
-    const changeValue = () => setValue("Revert Changes");
     return (
     <div>
-        <MemorizedBtn text={value} onClick={changeValue} />
-        <MemorizedBtn text="Continue" />
+        <Btn text="Save Changes" fontSize={18} />
+        <Btn text="Continue" />
     </div>
     )
 }
